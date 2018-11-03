@@ -23,8 +23,9 @@ public class Qytetet {
     static final int SALDO_SALIDA = 1000;
     private Sorpresa cartaActual;
     private Dado dado = Dado.getInstance();
-    private Jugador jugador_Actual;
+    private Jugador jugadorActual;
     private ArrayList<Jugador> jugadores = new ArrayList();
+    private EstadoJuego estadoJuego = null;
     
     private Qytetet(){}
     
@@ -37,6 +38,19 @@ public class Qytetet {
     }
     
     void actuarSiEnCasillaEdificable(){
+        
+        boolean deboPagar = jugadorActual.deboPagarAlquiler();
+        
+        if (deboPagar)
+            jugadorActual.pagarAlquiler();
+                if (jugadorActual.getSaldo() <= 0)
+                    estadoJuego = EstadoJuego.ALGUNJUGADORENBANCARROTA;
+                
+        Casilla casilla = this.obtenerCasillaJugadorActual();
+        
+        boolean tengoPropietario = casilla.tengoPropietario();
+        
+        
         
     }
     
@@ -77,7 +91,7 @@ public class Qytetet {
     }
 
     Jugador getJugador_Actual() {
-        return jugador_Actual;
+        return jugadorActual;
     }
 
     public ArrayList<Jugador> getJugadores() {
@@ -89,7 +103,9 @@ public class Qytetet {
     }
     
     public int getValorDado(){
-        throw new UnsupportedOperationException("Sin implementar");
+        
+        return this.dado.getValor();
+        
     }
     
     public void hipotecarPropiedad(int numeroCasilla){
@@ -150,6 +166,12 @@ public class Qytetet {
     
     public void jugar(){
         
+        int tirada = this.tirarDado();
+        
+        Casilla aux = this.tablero.obtenerCasillaFinal(jugadorActual.getCasillaActual(), tirada);
+        
+        this.mover(aux.getNumeroCasilla());
+        
     }
     
     private void mover(int numeroCasillaDestino){
@@ -164,23 +186,53 @@ public class Qytetet {
         throw new UnsupportedOperationException("Sin implementar");
     }
     
-    public int[] obtenerPropiedadesJugador(){
-        throw new UnsupportedOperationException("Sin implementar");
+    public ArrayList<Integer> obtenerPropiedadesJugador(){
+        
+        ArrayList<Integer> casillas = null;
+        
+        ArrayList<TituloPropiedad> aux = jugadorActual.getPropiedades();
+        
+        for (Casilla i:tablero.getCasillas())
+            if (aux.contains(i.getTitulo()))
+                casillas.add(i.getNumeroCasilla());
+        
+        return casillas;
+        
     }
     
-    public int[] obtenerPropiedadesJugadorSegunEstadoHipoteca(boolean estadoHipoteca){
-        throw new UnsupportedOperationException("Sin implementar");
+    public ArrayList<Integer> obtenerPropiedadesJugadorSegunEstadoHipoteca(boolean estadoHipoteca){
+       
+        ArrayList<Integer> casillas = null;
+        
+        ArrayList<TituloPropiedad> aux = jugadorActual.obtenerPropiedades(estadoHipoteca);
+        
+        for (Casilla i:tablero.getCasillas())
+            if (aux.contains(i.getTitulo()))
+                casillas.add(i.getNumeroCasilla());
+        
+        return casillas;
+        
     }
     
     public void obtenerRanking(){
         
+        jugadores.sort();
     }
     
     public int obtenerSaldoJugadorActual(){
-        throw new UnsupportedOperationException("Sin implementar");
+        
+        int saldo = this.jugadorActual.getSaldo();
+        
+        return saldo;
+        
     }
     
     private void salidaJugadores(){
+        
+        for (Jugador i:jugadores)
+            i.setCasillaActual(tablero.obtenerCasillaNumero(0));
+        
+        estadoJuego = EstadoJuego.JA_PREPARADO;
         
     }
     
@@ -190,10 +242,25 @@ public class Qytetet {
     
     public void siguienteJugador(){
         
+        int pos = jugadores.indexOf(jugadorActual);
+        
+        jugadorActual = jugadores.get((pos + 1) % MAX_JUGADORES);
+        
+        if (jugadorActual.getEncarcelado())
+            estadoJuego = EstadoJuego.JA_ENCARCELADOCONOPCIONDELIBERTAD;
+        else
+            estadoJuego = EstadoJuego.JA_PREPARADO;
+        
     }
     
     private int tirarDado(){
-        throw new UnsupportedOperationException("Sin implementar");
+        
+        int tirada;
+        
+        tirada = this.dado.tirar();
+        
+        return tirada;
+        
     }
     
     public boolean venderPropiedad(int numeroCasilla){

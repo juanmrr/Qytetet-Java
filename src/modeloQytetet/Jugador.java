@@ -33,7 +33,14 @@ public class Jugador implements Comparable{
     }
     
     int cuantasCasasHotelesTengo() {
-        throw new UnsupportedOperationException("Sin implementar");
+        
+        int total = 0;
+        
+        for (TituloPropiedad i:propiedades)
+            total = total + i.getNumCasas() + i.getNumHoteles();
+            
+        return total;
+        
     }
     
     boolean deboPagarAlquiler() {
@@ -41,7 +48,13 @@ public class Jugador implements Comparable{
     }
     
     Sorpresa devolverCartaLibertad() {
-        throw new UnsupportedOperationException("Sin implementar");
+        
+        Sorpresa aux = cartaLibertad;
+        
+        cartaLibertad = null;
+            
+        return aux;
+        
     }
     
     boolean edificarCasa(TituloPropiedad titulo) {
@@ -57,7 +70,15 @@ public class Jugador implements Comparable{
     }
     
     private boolean esDeMiPropiedad(TituloPropiedad titulo) {
-        throw new UnsupportedOperationException("Sin implementar");
+        
+        boolean aux = false;
+        
+        for (TituloPropiedad i:propiedades)
+            if (i.equals(titulo))
+                aux = true;
+        
+        return aux;
+        
     }
     
     boolean estoyEnCalleLibre() {
@@ -97,15 +118,45 @@ public class Jugador implements Comparable{
     }
     
     int modificarSaldo(int cantidad) {
-        throw new UnsupportedOperationException("Sin implementar");
+        
+        int aux = 0;
+        
+        aux = this.getSaldo();
+        
+        aux = aux + cantidad;
+        
+        this.saldo = aux;
+        
+        return aux;
+        
     }
     
     int obtenerCapital() {
-        throw new UnsupportedOperationException("Sin implementar");
+        
+        int total = 0;
+        
+        for (TituloPropiedad i:propiedades){
+            total = total + (i.getNumCasas() + i.getNumHoteles()) * i.getPrecioEdificar();
+            if (i.getHipotecada())
+                total = total - i.getHipotecaBase();
+        }
+        
+        total = total + this.getSaldo();
+        
+        return total;
+        
     }
     
     ArrayList<TituloPropiedad> obtenerPropiedades(boolean hipotecada) {
-        throw new UnsupportedOperationException("Sin implementar");
+        
+        ArrayList<TituloPropiedad> aux = null;
+        
+        for (TituloPropiedad i:propiedades)
+            if (i.getHipotecada() == hipotecada)
+                aux.add(i);
+        
+        return aux;
+        
     }
     
     void pagarAlquiler() {
@@ -113,7 +164,7 @@ public class Jugador implements Comparable{
     }
     
     void pagarImpuesto() {
-        
+        this.modificarSaldo(-(casillaActual.getCoste()));
     }
     
     void pagarLibertad(int cantidad) {
@@ -133,11 +184,25 @@ public class Jugador implements Comparable{
     }
     
     boolean tengoCartaLibertad() {
-        throw new UnsupportedOperationException("Sin implementar");
+        
+        boolean aux = false;
+        
+        if (cartaLibertad != null)
+            aux = true;
+        
+        return aux;
+        
     }
     
     private boolean tengoSaldo(int cantidad) {
-        throw new UnsupportedOperationException("Sin implementar");
+        
+        boolean aux = false;
+        
+        if (this.getSaldo() > cantidad)
+            aux = true;
+        
+        return aux;
+        
     }
     
     boolean venderPropiedad(Casilla casilla) {
@@ -150,7 +215,7 @@ public class Jugador implements Comparable{
         
         String aux = new String();
         
-        aux = "Jugador: " + nombre + ", encarcelado: " + encarcelado + ", saldo: " + saldo;
+        aux = "Jugador: " + nombre + ", encarcelado: " + encarcelado + ", saldo: " + saldo + ", capital: " + this.obtenerCapital();
         
         if (cartaLibertad != null)
             aux = aux + ", carta libertad" +  cartaLibertad;
@@ -162,11 +227,13 @@ public class Jugador implements Comparable{
                 aux = aux + i.getNombre() + ", ";
         if (casillaActual != null)
             
-            aux = aux + ", casilla actual: " +  casillaActual + "}";
+            aux = aux + ", casilla actual: " +  casillaActual;
         
         else
             
             aux = aux + ", no se ha asignado una casilla aún";
+        
+        aux = aux + "}";
             
         return aux;
     }

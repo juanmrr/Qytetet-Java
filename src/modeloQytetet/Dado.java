@@ -5,6 +5,8 @@
  */
 package modeloQytetet;
 
+import java.util.Random;
+
 /**
  *
  * @author juanma
@@ -18,7 +20,13 @@ public class Dado {
     private Dado(){}
     
     int tirar() {
-        throw new UnsupportedOperationException("Sin implementar");
+        
+        Random numero_aleatorio = new Random();
+        
+        valor = (int) (numero_aleatorio.nextDouble() * 6 + 1);
+        
+        return valor;
+        
     }
 
     public int getValor() {

@@ -3,18 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/juanma/NetBeansProjects/QytetetJava/src/modeloQytetet/Casilla.java</file>
-            <file>file:/home/juanma/NetBeansProjects/QytetetJava/src/modeloQytetet/TituloPropiedad.java</file>
-            <file>file:/home/juanma/NetBeansProjects/QytetetJava/src/modeloQytetet/Sorpresa.java</file>
-            <file>file:/home/juanma/NetBeansProjects/QytetetJava/src/modeloQytetet/PruebaQytetet.java</file>
-            <file>file:/home/juanma/NetBeansProjects/QytetetJava/src/modeloQytetet/TipoSorpresa.java</file>
-            <file>file:/home/juanma/NetBeansProjects/QytetetJava/src/modeloQytetet/Jugador.java</file>
-            <file>file:/home/juanma/NetBeansProjects/QytetetJava/src/modeloQytetet/Tablero.java</file>
-            <file>file:/home/juanma/NetBeansProjects/QytetetJava/src/modeloQytetet/EstadoJuego.java</file>
-            <file>file:/home/juanma/NetBeansProjects/QytetetJava/src/modeloQytetet/Dado.java</file>
-            <file>file:/home/juanma/NetBeansProjects/QytetetJava/src/modeloQytetet/Comparable.java</file>
-            <file>file:/home/juanma/NetBeansProjects/QytetetJava/src/modeloQytetet/Qytetet.java</file>
-            <file>file:/home/juanma/NetBeansProjects/QytetetJava/src/modeloQytetet/TipoCasilla.java</file>
+            <file>file:/home/juanma/Documentos/git/Qytetet-Java/src/modeloQytetet/Casilla.java</file>
+            <file>file:/home/juanma/Documentos/git/Qytetet-Java/src/modeloQytetet/Comparable.java</file>
+            <file>file:/home/juanma/Documentos/git/Qytetet-Java/src/modeloQytetet/EstadoJuego.java</file>
+            <file>file:/home/juanma/Documentos/git/Qytetet-Java/src/modeloQytetet/TituloPropiedad.java</file>
+            <file>file:/home/juanma/Documentos/git/Qytetet-Java/src/modeloQytetet/Dado.java</file>
+            <file>file:/home/juanma/Documentos/git/Qytetet-Java/src/modeloQytetet/Tablero.java</file>
+            <file>file:/home/juanma/Documentos/git/Qytetet-Java/src/modeloQytetet/Qytetet.java</file>
+            <file>file:/home/juanma/Documentos/git/Qytetet-Java/src/modeloQytetet/PruebaQytetet.java</file>
+            <file>file:/home/juanma/Documentos/git/Qytetet-Java/src/modeloQytetet/Jugador.java</file>
         </group>
     </open-files>
 </project-private>
