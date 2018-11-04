@@ -29,7 +29,13 @@ public class Jugador implements Comparable{
     }
     
     boolean comprarTituloPropiedad() {
-        throw new UnsupportedOperationException("Sin implementar");
+        
+        boolean comprado = false;
+        
+        comprado = this.comprarTituloPropiedad();
+        
+        return comprado;
+        
     }
     
     int cuantasCasasHotelesTengo() {
@@ -44,7 +50,15 @@ public class Jugador implements Comparable{
     }
     
     boolean deboPagarAlquiler() {
-        throw new UnsupportedOperationException("Sin implementar");
+        
+        boolean deboPagar = false;
+        
+        TituloPropiedad titulo = this.casillaActual.getTitulo();
+        
+        deboPagar = !this.esDeMiPropiedad(titulo) && titulo.tengoPropietario() && !titulo.propietarioEncarcelado() && !titulo.getHipotecada();
+        
+        return deboPagar;
+        
     }
     
     Sorpresa devolverCartaLibertad() {
@@ -58,7 +72,27 @@ public class Jugador implements Comparable{
     }
     
     boolean edificarCasa(TituloPropiedad titulo) {
-        throw new UnsupportedOperationException("Sin implementar");
+        
+        boolean edificada = false;
+        
+        int numCasas = titulo.getNumCasas();
+        
+        int costeEdificarCasa = 0;
+        
+        boolean tengoSaldo = false;
+        
+        if (numCasas < 4){
+            costeEdificarCasa = titulo.getPrecioEdificar();
+            tengoSaldo = this.tengoSaldo(costeEdificarCasa);
+            if (tengoSaldo){
+                titulo.edificarCasa();
+                this.modificarSaldo(-costeEdificarCasa);
+                edificada = true;
+            }
+        }
+        
+        return edificada;
+        
     }
     
     boolean edificarHotel(TituloPropiedad titulo) {
@@ -66,6 +100,12 @@ public class Jugador implements Comparable{
     }
     
     private void eliminarDeMisPropiedades(TituloPropiedad titulo) {
+        
+        titulo.setPropietario(null);
+        
+        int precioVenta = titulo.calcularPrecioVenta();
+        
+        this.modificarSaldo(precioVenta);
         
     }
     
@@ -109,8 +149,12 @@ public class Jugador implements Comparable{
         return casillaActual;
     }
     
-    boolean hipotecarPropiedad(TituloPropiedad titulo) {
-        throw new UnsupportedOperationException("Sin implementar");
+    void hipotecarPropiedad(TituloPropiedad titulo) {
+        
+        int costeHipoteca = titulo.hipotecar();
+        
+        this.saldo = this.modificarSaldo(costeHipoteca);
+        
     }
     
     void irACarcel(Casilla casilla) {
@@ -161,6 +205,10 @@ public class Jugador implements Comparable{
     
     void pagarAlquiler() {
         
+        int costeAlquiler = this.casillaActual.getTitulo().pagarAlquiler();
+        
+        this.modificarSaldo(-costeAlquiler);
+        
     }
     
     void pagarImpuesto() {
@@ -205,8 +253,12 @@ public class Jugador implements Comparable{
         
     }
     
-    boolean venderPropiedad(Casilla casilla) {
-        throw new UnsupportedOperationException("Sin implementar");
+    void venderPropiedad(Casilla casilla) {
+        
+        TituloPropiedad titulo = casilla.getTitulo();
+        
+        this.propiedades.remove(titulo);
+        
     }
     
     @Override
