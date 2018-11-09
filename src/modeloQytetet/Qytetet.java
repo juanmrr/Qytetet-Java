@@ -6,6 +6,8 @@
 package modeloQytetet;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 /**
  *
@@ -122,7 +124,17 @@ public class Qytetet {
     }
     
     public boolean cancelarHipoteca(int numeroCasilla){
-        throw new UnsupportedOperationException("Sin implementar");
+        
+        boolean cancelar;
+        
+        TituloPropiedad titulo = this.tablero.getCasillas().get(numeroCasilla).getTitulo();
+        
+        cancelar = this.jugadorActual.cancelarHipoteca(titulo);
+        
+        this.estadoJuego = EstadoJuego.JA_PUEDEGESTIONAR;
+        
+        return cancelar;
+         
     }
     
     public boolean comprarTituloPropiedad(){
@@ -165,7 +177,20 @@ public class Qytetet {
     }
     
     public boolean edificarHotel(int numeroCasilla){
-        throw new UnsupportedOperationException("Sin implementar");
+        
+        boolean edificado = false;
+        
+        Casilla casilla = this.tablero.obtenerCasillaNumero(numeroCasilla);
+        
+        TituloPropiedad titulo = casilla.getTitulo();
+        
+        edificado = this.jugadorActual.edificarHotel(titulo);
+        
+        if (edificado)
+            this.setEstadoJuego(EstadoJuego.JA_PUEDEGESTIONAR);
+        
+        return edificado;        
+        
     }
     
     private void encarcelarJugador(){
@@ -278,8 +303,6 @@ public class Qytetet {
         
         int resultado;
         
-        boolean tengoSaldo = false;
-        
         if (metodo == MetodoSalirCarcel.TIRANDODADO){
             resultado = this.tirarDado();
             if (resultado >= 5)
@@ -287,11 +310,6 @@ public class Qytetet {
         }
         else if (metodo == MetodoSalirCarcel.PAGANDOLIBERTAD){
             this.jugadorActual.pagarLibertad(PRECIO_LIBERTAD);
-            tengoSaldo = this.jugadorActual.tengoSaldo(PRECIO_LIBERTAD);
-            if (tengoSaldo){
-                this.jugadorActual.setEncarcelado(false);
-                this.jugadorActual.modificarSaldo(-PRECIO_LIBERTAD);
-            }
         }
         
         boolean libre = this.jugadorActual.getEncarcelado();
@@ -315,11 +333,11 @@ public class Qytetet {
         
     }
     
-    private void mover(int numCasillaDestino){
+    void mover(int numCasillaDestino){
         
         Casilla casillaInicial = this.jugadorActual.getCasillaActual();
         
-        Casilla casillaFinal = this.tablero.obtenerCasillaFinal(casillaInicial, numeroCasillaDestino);
+        Casilla casillaFinal = this.tablero.obtenerCasillaFinal(casillaInicial, numCasillaDestino);
         
         this.jugadorActual.setCasillaActual(casillaFinal);
         
@@ -334,11 +352,15 @@ public class Qytetet {
     }
     
     public Casilla obtenerCasillaJugadorActual(){
-        throw new UnsupportedOperationException("Sin implementar");
+        
+        return this.jugadorActual.getCasillaActual();
+        
     }
     
     public ArrayList<Casilla> obtenerCasillasTablero(){
-        throw new UnsupportedOperationException("Sin implementar");
+        
+        return this.tablero.getCasillas();
+        
     }
     
     public ArrayList<Integer> obtenerPropiedadesJugador(){
@@ -371,7 +393,11 @@ public class Qytetet {
     
     public void obtenerRanking(){
         
-        jugadores.sort(c);
+        ArrayList<Jugador> aux = this.jugadores;
+        
+        Collections.sort(aux);
+        
+        System.out.println(aux);
     }
     
     public int obtenerSaldoJugadorActual(){
@@ -389,9 +415,17 @@ public class Qytetet {
         
         estadoJuego = EstadoJuego.JA_PREPARADO;
         
+        Random numero_aleatorio = new Random();
+        
+        int jugador = (int) (numero_aleatorio.nextDouble() * this.jugadores.size() + 1);
+        
+        this.jugadorActual = this.jugadores.get(jugador);
+        
     }
     
     private void setCartaActual(Sorpresa cartaActual){
+        
+        this.cartaActual = cartaActual;
         
     }
     
@@ -403,7 +437,7 @@ public class Qytetet {
         
         int pos = jugadores.indexOf(jugadorActual);
         
-        jugadorActual = jugadores.get((pos + 1) % MAX_JUGADORES);
+        jugadorActual = jugadores.get((pos + 1) % jugadores.size());
         
         if (jugadorActual.getEncarcelado())
             estadoJuego = EstadoJuego.JA_ENCARCELADOCONOPCIONDELIBERTAD;

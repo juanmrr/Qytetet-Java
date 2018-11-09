@@ -23,7 +23,14 @@ public class Tablero {
     }
     
     boolean esCasillCarcel(int numeroCasilla){
-        throw new UnsupportedOperationException("Sin implementar");
+        
+        boolean esCarcel = false;
+        
+        if (numeroCasilla == carcel.getNumeroCasilla())
+            esCarcel = true;
+        
+        return esCarcel;
+        
     }
     
     public Casilla getCarcel() {

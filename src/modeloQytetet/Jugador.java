@@ -25,7 +25,18 @@ public class Jugador implements Comparable{
     }
     
     boolean cancelarHipoteca(TituloPropiedad titulo) {
-        throw new UnsupportedOperationException("Sin implementar");
+        
+        boolean cancelar = false;
+        
+        int cantidad = titulo.calcularCosteCancelar();
+        
+        if (this.saldo > cantidad){
+            this.modificarSaldo(-cantidad);
+            titulo.cancelarHipoteca();
+            cancelar = true;
+        }
+            
+        return cancelar;
     }
     
     boolean comprarTituloPropiedad() {
@@ -96,10 +107,30 @@ public class Jugador implements Comparable{
     }
     
     boolean edificarHotel(TituloPropiedad titulo) {
-        throw new UnsupportedOperationException("Sin implementar");
+        
+        boolean edificado = false;
+        
+        int numHoteles = titulo.getNumHoteles();
+     
+        int costeEdificarHotel = 0;
+        
+        boolean tengoSaldo = false;
+        
+        if (numHoteles < 4){
+            costeEdificarHotel = titulo.getPrecioEdificar();
+            tengoSaldo = this.tengoSaldo(costeEdificarHotel);
+            if (tengoSaldo){
+                titulo.edificarHotel();
+                this.modificarSaldo(-costeEdificarHotel);
+                edificado = true;
+            }
+        }
+        
+        return edificado;
+        
     }
     
-    private void eliminarDeMisPropiedades(TituloPropiedad titulo) {
+    void eliminarDeMisPropiedades(TituloPropiedad titulo) {
         
         titulo.setPropietario(null);
         
@@ -153,25 +184,25 @@ public class Jugador implements Comparable{
         
         int costeHipoteca = titulo.hipotecar();
         
-        this.saldo = this.modificarSaldo(costeHipoteca);
+        this.modificarSaldo(costeHipoteca);
         
     }
     
     void irACarcel(Casilla casilla) {
         
+        setCasillaActual(casilla);
+        
+        setEncarcelado(true);
+        
     }
     
-    int modificarSaldo(int cantidad) {
+    void modificarSaldo(int cantidad) {
         
-        int aux = 0;
-        
-        aux = this.getSaldo();
+        int aux = this.getSaldo();
         
         aux = aux + cantidad;
         
         this.saldo = aux;
-        
-        return aux;
         
     }
     
@@ -216,6 +247,14 @@ public class Jugador implements Comparable{
     }
     
     void pagarLibertad(int cantidad) {
+        
+        boolean tengoSaldo = false;
+        
+        tengoSaldo = this.tengoSaldo(cantidad);
+        if (tengoSaldo){
+            this.setEncarcelado(false);
+            this.modificarSaldo(-cantidad);
+        }
         
     }
 
