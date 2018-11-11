@@ -47,7 +47,7 @@ public class TituloPropiedad {
     
     int calcularCosteHipotecar() {
         
-        int costeHipoteca = (int) ((this.getNumCasas() * 0.5) + (this.getNumHoteles() * 2) + 1);
+        int costeHipoteca = (int) (this.hipotecaBase * ((this.getNumCasas() * 0.5) + (this.getNumHoteles() * 2) + 1));
         
         return costeHipoteca;
         

@@ -43,7 +43,16 @@ public class Jugador implements Comparable{
         
         boolean comprado = false;
         
-        comprado = this.comprarTituloPropiedad();
+        int costeCompra = this.casillaActual.getCoste();
+        
+        TituloPropiedad titulo = null;
+        
+        if (costeCompra < this.saldo){
+            titulo = this.casillaActual.asignarPropietario(this);
+            comprado = true;
+            this.propiedades.add(titulo);
+            this.modificarSaldo(-costeCompra);
+        }
         
         return comprado;
         
@@ -208,16 +217,14 @@ public class Jugador implements Comparable{
     
     int obtenerCapital() {
         
-        int total = 0;
+        int total = saldo;
         
         for (TituloPropiedad i:propiedades){
             total = total + (i.getNumCasas() + i.getNumHoteles()) * i.getPrecioEdificar();
             if (i.getHipotecada())
                 total = total - i.getHipotecaBase();
         }
-        
-        total = total + this.getSaldo();
-        
+
         return total;
         
     }
@@ -243,7 +250,7 @@ public class Jugador implements Comparable{
     }
     
     void pagarImpuesto() {
-        this.modificarSaldo(-(casillaActual.getCoste()));
+        this.modificarSaldo(casillaActual.getCoste());
     }
     
     void pagarLibertad(int cantidad) {
@@ -315,7 +322,8 @@ public class Jugador implements Comparable{
             aux = aux + ", no tiene propiedades";
         else
             for (TituloPropiedad i: propiedades)
-                aux = aux + i.getNombre() + ", ";
+                aux = aux + ", " + i.getNombre();
+        
         if (casillaActual != null)
             
             aux = aux + ", casilla actual: " +  casillaActual;
@@ -324,7 +332,7 @@ public class Jugador implements Comparable{
             
             aux = aux + ", no se ha asignado una casilla aún";
         
-        aux = aux + "}";
+        aux = aux + "}\n";
             
         return aux;
     }
@@ -334,7 +342,7 @@ public class Jugador implements Comparable{
         
         Jugador jugador = (Jugador) object;
         
-        if (this.saldo > jugador.saldo)
+        if (this.saldo < jugador.saldo)
             return 1;
         else if (this.saldo == jugador.saldo)
             return 0;

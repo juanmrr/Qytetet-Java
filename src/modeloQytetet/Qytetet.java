@@ -83,34 +83,34 @@ public class Qytetet {
         
         this.setEstadoJuego(EstadoJuego.JA_PUEDEGESTIONAR);
 
-        switch (this.cartaActual.getTipo()){
-            case SALIRCARCEL:
+        if (this.cartaActual.getTipo()== TipoSorpresa.SALIRCARCEL)
                 this.jugadorActual.setCartaLibertad(cartaActual);
-                break;
-            case PAGARCOBRAR:
+        else{
+            this.mazo.add(this.cartaActual);
+            if (this.cartaActual.getTipo()== TipoSorpresa.PAGARCOBRAR){
                 this.jugadorActual.modificarSaldo(this.cartaActual.getValor());
                 if (this.jugadorActual.getSaldo() < 0)
                     this.setEstadoJuego(EstadoJuego.ALGUNJUGADORENBANCARROTA);
-                break;
-            case IRACASILLA:
+            }
+            else if (this.cartaActual.getTipo()== TipoSorpresa.IRACASILLA){
                 int valor = this.cartaActual.getValor();
                 boolean casillaCarcel = this.tablero.esCasillCarcel(valor);
                 if (casillaCarcel)
                     this.encarcelarJugador();
                 else
                     this.mover(valor);
-                break;
-            case PORCASAHOTEL:
+            }
+            else if (this.cartaActual.getTipo()== TipoSorpresa.PORCASAHOTEL){
                 int cantidad = this.cartaActual.getValor();
                 int numeroTotal = this.jugadorActual.cuantasCasasHotelesTengo();
                 this.jugadorActual.modificarSaldo(cantidad*numeroTotal);
                 if (this.jugadorActual.getSaldo() < 0)
                     this.setEstadoJuego(EstadoJuego.ALGUNJUGADORENBANCARROTA);
-                break;
-            case PORJUGADOR:
+            }
+            else if (this.cartaActual.getTipo()== TipoSorpresa.PORJUGADOR){
                 Jugador jugador = null;
-                for (int i = 0; i < MAX_JUGADORES; i++)
-                    jugador = this.jugadores.get((i + 1) % MAX_JUGADORES);
+                for (Jugador i:jugadores)
+                    jugador = i;
                     if (jugador != this.jugadorActual)
                         jugador.modificarSaldo(cartaActual.getValor());
                     if (jugador.getSaldo() < 0)
@@ -118,7 +118,7 @@ public class Qytetet {
                     this.jugadorActual.modificarSaldo(-this.cartaActual.getValor());
                     if (this.jugadorActual.getSaldo() < 0)
                         this.setEstadoJuego(EstadoJuego.ALGUNJUGADORENBANCARROTA);
-                break;
+            }
         }
                     
     }
@@ -139,19 +139,8 @@ public class Qytetet {
     
     public boolean comprarTituloPropiedad(){
         
-        boolean comprado = false;
-        
-        int costeCompra = this.jugadorActual.getCasillaActual().getCoste();
-        
-        TituloPropiedad titulo = null;
-                
-        if (costeCompra < this.jugadorActual.getSaldo()){
-            titulo = this.jugadorActual.getCasillaActual().asignarPropietario(jugadorActual);
-            comprado = true;
-            this.jugadorActual.getPropiedades().add(titulo);
-            this.jugadorActual.modificarSaldo(-costeCompra);
-        }
-        
+        boolean comprado = this.jugadorActual.comprarTituloPropiedad();
+         
         if (comprado)
             this.setEstadoJuego(EstadoJuego.JA_PUEDEGESTIONAR);
         
@@ -255,7 +244,7 @@ public class Qytetet {
 
         //2 cartas de IRACASILLA, cuyo valor es el número de la casilla a dónde vas.
         mazo.add(new Sorpresa ("Avance hasta la casilla X.", 8, TipoSorpresa.IRACASILLA));
-        mazo.add(new Sorpresa ("Avance hasta la casilla Y", 18, TipoSorpresa.IRACASILLA));
+        mazo.add(new Sorpresa ("Avance hasta la casilla Y", 4, TipoSorpresa.IRACASILLA));
         
         //2 cartas de PAGARCOBRAR, cuyo valor es la cantidad de dinero a pagar si es negativo o a cobrar si es positivo.
         
@@ -275,6 +264,8 @@ public class Qytetet {
         //1 carta de SalirCarcel, con la que el jugador podrá salir de la cárcel y cuyo valor no es aplicable (0 por defecto).
         
         mazo.add(new Sorpresa ("Salga de la carcel cuando quiera con esta carta.", 0, TipoSorpresa.SALIRCARCEL));
+        
+        Collections.shuffle(mazo);
     }
     
     public void inicializarJuego(ArrayList<String> nombres){
@@ -397,7 +388,13 @@ public class Qytetet {
         
         Collections.sort(aux);
         
-        System.out.println(aux);
+        String ranking = null;
+        
+        for (Jugador i:aux){
+            ranking = i.getNombre() + " -> " + i.getSaldo() + "\n";
+            System.out.println(ranking);
+        }
+        
     }
     
     public int obtenerSaldoJugadorActual(){
@@ -417,7 +414,7 @@ public class Qytetet {
         
         Random numero_aleatorio = new Random();
         
-        int jugador = (int) (numero_aleatorio.nextDouble() * this.jugadores.size() + 1);
+        int jugador = (int) (numero_aleatorio.nextDouble() * this.jugadores.size());
         
         this.jugadorActual = this.jugadores.get(jugador);
         

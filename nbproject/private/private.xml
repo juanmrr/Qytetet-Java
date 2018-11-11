@@ -5,13 +5,17 @@
         <group>
             <file>file:/home/juanma/Documentos/git/Qytetet-Java/src/modeloQytetet/Casilla.java</file>
             <file>file:/home/juanma/Documentos/git/Qytetet-Java/src/modeloQytetet/Sorpresa.java</file>
-            <file>file:/home/juanma/Documentos/git/Qytetet-Java/src/modeloQytetet/EstadoJuego.java</file>
+            <file>file:/home/juanma/Documentos/git/Qytetet-Java/src/modeloQytetet/TipoSorpresa.java</file>
             <file>file:/home/juanma/Documentos/git/Qytetet-Java/src/modeloQytetet/TituloPropiedad.java</file>
-            <file>file:/home/juanma/Documentos/git/Qytetet-Java/src/modeloQytetet/Dado.java</file>
             <file>file:/home/juanma/Documentos/git/Qytetet-Java/src/modeloQytetet/Tablero.java</file>
-            <file>file:/home/juanma/Documentos/git/Qytetet-Java/src/modeloQytetet/Qytetet.java</file>
-            <file>file:/home/juanma/Documentos/git/Qytetet-Java/src/modeloQytetet/PruebaQytetet.java</file>
             <file>file:/home/juanma/Documentos/git/Qytetet-Java/src/modeloQytetet/Jugador.java</file>
+            <file>file:/home/juanma/Documentos/git/Qytetet-Java/src/modeloQytetet/EstadoJuego.java</file>
+            <file>file:/home/juanma/Documentos/git/Qytetet-Java/src/modeloQytetet/Dado.java</file>
+            <file>file:/home/juanma/Documentos/git/Qytetet-Java/src/modeloQytetet/Qytetet.java</file>
+            <file>file:/home/juanma/Documentos/git/Qytetet-Java/src/modeloQytetet/MetodoSalirCarcel.java</file>
+            <file>file:/home/juanma/Documentos/git/Qytetet-Java/src/modeloQytetet/PruebaQytetet.java</file>
+            <file>file:/home/juanma/Documentos/git/Qytetet-Java/src/InterfazUsuarioQytetet/InterfazUsuarioQytetet.java</file>
+            <file>file:/home/juanma/Documentos/git/Qytetet-Java/src/InterfazUsuarioQytetet/OpcionMenu.java</file>
         </group>
     </open-files>
 </project-private>

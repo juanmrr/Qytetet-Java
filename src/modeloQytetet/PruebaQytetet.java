@@ -95,17 +95,60 @@ public class PruebaQytetet {
         
         System.out.println(juego.getMazo().toString());
         
-        System.out.println(mayorQueCero());
-        
-        System.out.println(irACasilla());
-        
-        for (TipoSorpresa i: TipoSorpresa.values()){
-            ArrayList aux = new ArrayList();
-            aux = tipos(i);
-            System.out.println(aux);
-        }
-        
         System.out.println(juego.getTablero().toString());
+        
+        juego.mover(2);
+        
+        System.out.println(juego.getJugadores().toString());
+        
+        juego.comprarTituloPropiedad();
+        
+        juego.edificarCasa(2);
+        
+        System.out.println(juego.getJugadores().toString());
+        
+        juego.siguienteJugador();
+        
+        juego.mover(18);
+        
+        System.out.println(juego.getJugadores().toString());
+        
+        juego.mover(4);
+        
+        System.out.println(juego.getJugadores().toString());
+        
+        juego.siguienteJugador();
+        
+        juego.mover(2);
+        
+        System.out.println(juego.getJugadores().toString());
+        
+        juego.hipotecarPropiedad(2);
+        
+        System.out.println(juego.getJugadores().toString());
+        
+        juego.cancelarHipoteca(2);
+        
+        System.out.println(juego.getJugadores().toString());
+        
+        juego.venderPropiedad(2);
+        
+        System.out.println(juego.getJugadores().toString());
+        
+        juego.aplicarSorpresa();
+        
+        System.out.println(juego.getJugadores().toString());
+        
+        juego.obtenerRanking();
+        
+        juego.siguienteJugador();
+        
+        juego.mover(3);
+        
+        juego.intentarSalirCarcel(MetodoSalirCarcel.PAGANDOLIBERTAD);
+        
+        System.out.println(juego.getJugadores().toString());
+        
     }
     
 }

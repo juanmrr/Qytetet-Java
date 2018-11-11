@@ -35,7 +35,9 @@ public class Casilla {
     }
     
     TituloPropiedad asignarPropietario(Jugador jugador) {
-        throw new UnsupportedOperationException("Sin implementar");
+        this.titulo.setPropietario(jugador);
+        
+        return titulo;
     }
 
     public int getCoste() {
