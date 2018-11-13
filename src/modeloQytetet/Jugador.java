@@ -141,6 +141,8 @@ public class Jugador implements Comparable{
     
     void eliminarDeMisPropiedades(TituloPropiedad titulo) {
         
+        this.propiedades.remove(titulo);
+        
         titulo.setPropietario(null);
         
         int precioVenta = titulo.calcularPrecioVenta();
@@ -303,7 +305,7 @@ public class Jugador implements Comparable{
         
         TituloPropiedad titulo = casilla.getTitulo();
         
-        this.propiedades.remove(titulo);
+        this.eliminarDeMisPropiedades(titulo);
         
     }
     
@@ -338,17 +340,11 @@ public class Jugador implements Comparable{
     }
 
     @Override
-    public int compareTo(Object object) {
+    public int compareTo(Object otroJugador) {
         
-        Jugador jugador = (Jugador) object;
+        int otroCapital = ((Jugador) otroJugador).obtenerCapital();
         
-        if (this.saldo < jugador.saldo)
-            return 1;
-        else if (this.saldo == jugador.saldo)
-            return 0;
-        else
-            return -1;
-    
+        return otroCapital - this.obtenerCapital();
     }
   
 }

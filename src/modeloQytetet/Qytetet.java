@@ -459,10 +459,6 @@ public class Qytetet {
         
         this.jugadorActual.venderPropiedad(casilla);
         
-        TituloPropiedad titulo = casilla.getTitulo();
-        
-        this.jugadorActual.eliminarDeMisPropiedades(titulo);
-        
         this.setEstadoJuego(EstadoJuego.JA_PUEDEGESTIONAR);
         
     }
