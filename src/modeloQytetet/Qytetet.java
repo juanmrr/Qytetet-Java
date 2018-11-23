@@ -332,7 +332,7 @@ public class Qytetet {
         
         this.jugadorActual.setCasillaActual(casillaFinal);
         
-        if (numCasillaDestino < casillaInicial.getNumeroCasilla())
+        if (casillaFinal.getNumeroCasilla() < casillaInicial.getNumeroCasilla())
             this.jugadorActual.modificarSaldo(SALDO_SALIDA);
         
         if (casillaFinal.soyEdificable())
@@ -384,7 +384,10 @@ public class Qytetet {
     
     public void obtenerRanking(){
         
-        ArrayList<Jugador> aux = this.jugadores;
+        ArrayList<Jugador> aux = new ArrayList();
+        
+        for (Jugador i:this.jugadores)
+            aux.add(i);
         
         Collections.sort(aux);
         

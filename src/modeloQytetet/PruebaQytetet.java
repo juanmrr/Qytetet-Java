@@ -145,7 +145,13 @@ public class PruebaQytetet {
         
         juego.mover(3);
         
+        System.out.println(juego.getJugadores().toString());
+        
         juego.intentarSalirCarcel(MetodoSalirCarcel.PAGANDOLIBERTAD);
+        
+        System.out.println(juego.getJugadores().toString());
+        
+        juego.mover(1);
         
         System.out.println(juego.getJugadores().toString());
         
